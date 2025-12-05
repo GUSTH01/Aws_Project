@@ -7,6 +7,29 @@
         body { background-color: #f8f9fa; }
         .card-img-top { height: 200px; object-fit: cover; }
         .gallery-container { margin-top: 50px; }
+        .delete-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(220, 53, 69, 0.9);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+        .delete-btn:hover {
+            background: rgba(220, 53, 69, 1);
+            transform: scale(1.1);
+        }
+        .card {
+            position: relative;
+        }
     </style>
 </head>
 <body>
@@ -43,6 +66,15 @@
     <div class="row row-cols-1 row-cols-md-3 g-4">
         <div class="col" th:each="img : ${images}">
             <div class="card h-100 shadow-sm">
+                <!-- Botão de deletar -->
+                <form th:action="@{/image/delete/{id}(id=${img.id})}" method="post" style="display: inline;">
+                    <button type="submit" class="delete-btn" 
+                            onclick="return confirm('Tem certeza que deseja deletar esta imagem?');"
+                            title="Deletar imagem">
+                        <span style="color: white; font-size: 20px;">🗑️</span>
+                    </button>
+                </form>
+                
                 <img th:src="${img.s3Url}" class="card-img-top" alt="...">
                 <div class="card-body">
                     <h5 class="card-title" th:text="${img.title}">Titulo</h5>

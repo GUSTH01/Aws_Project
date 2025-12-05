@@ -43,4 +43,26 @@ public class GalleryController {
         }
         return "redirect:/";
     }
+
+    @PostMapping("/image/delete/{id}")
+    public String deleteImage(@PathVariable Long id) {
+        try {
+            // 1. Busca a imagem no banco
+            Image image = repository.findById(id)
+                    .orElseThrow(() -> new RuntimeException("Imagem não encontrada"));
+
+            // 2. Deleta o arquivo do S3
+            s3Service.deleteFile(image.getS3Url());
+
+            // 3. Deleta o registro do banco de dados
+            repository.deleteById(id);
+
+            System.out.println("Imagem deletada com sucesso: ID " + id);
+
+        } catch (Exception e) {
+            System.err.println("Erro ao deletar imagem: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return "redirect:/";
+    }
 }

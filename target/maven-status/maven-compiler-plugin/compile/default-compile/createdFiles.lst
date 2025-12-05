@@ -1,6 +1,6 @@
 com\example\cloudgallery\S3Service.class
-com\example\cloudgallery\CloudGalleryApplication.class
 com\example\cloudgallery\GalleryController.class
 com\example\cloudgallery\LambdaService.class
 com\example\cloudgallery\Image.class
 com\example\cloudgallery\ImageRepository.class
+com\example\cloudgallery\CloudGalleryApplication.class
